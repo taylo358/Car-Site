@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html ng-app="ToDo">
+
+    <head>
+        <title>Car Site</title>
+        
+<!--Bootstrap CDN-->        
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!--FontAwesome-->
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+        
+<!--Load JQuery-->
+        <script
+        src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        
+<!-- load js file -->
+        <script src="script.js" type="text/javascript"></script>
+        
+<!--CSS stylesheet-->        
+        <link rel="stylesheet" type="text/css" href="style.css">
+  
+<!--Cross out checked items on to do list-->       
+    <style>
+        .done{text-decoration: line-through;color:black;}
+    </style>
+
+</head>
+    
+    <body>
+<!-- Back to top anchor -->
+    <a href="#" class="back-to-top">Back to top</a>
+        
+    
+    <h3>Super Car</h3>
+        <img src="bmw-i8-itron-1.jpg" alt="car" style="width:100%; height:500px;">
+<br><br>
+
+<!--Interior Images-->        
+<div class="container">
+    <div class="row">                             
+        <div class="col-sm-4">                 
+            <img class="img-responsive" src="bmw-interior.jpg" style="width:304px;height:228px;"/>
+        </div>                  
+        <div class="col-sm-4">
+            <img class="img-responsive" src="interior2.jpg" style="width:304px;height:228px;"/>
+        </div>
+         <div class="col-sm-4">
+            <img class="img-responsive" src="interior3.jpg" style="width:304px;height:228px;" />
+        </div>  
+    </div>
+</div> 
+    
+<!--To Do List App-->        
+        <div ng-controller="todoController">
+            <form name="frm" ng-submit="addTodo()">
+                <h4>Start a To Do List</h4>
+            <input type="text" name="newtodo" ng-model="newTodo" required />
+                <button ng-disabled="frm.$invalid">Add</button>
+            </form>
+            <button ng-click="clearCompleted()">Clear Completed</button>
+            <ul>
+                <li ng-repeat="todo in todos">
+                    <input type="checkbox" ng-model="todo.done" />
+                    <span ng-class="{'done':todo.done}">{{todo.title}}</span>
+                </li>
+            </ul>
+        </div>
+        
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js">
+    </script>
+    
+        <script>
+            
+        angular.module('ToDo',[]).
+        controller('todoController',['$scope',function($scope){
+        $scope.todos = [
+        {'title':'','done':false}
+        ];
+        
+        $scope.addTodo = function(){
+            $scope.todos.push({'title':$scope.newTodo,'done':false})
+            $scope.newTodo = ''
+        }
+        $scope.clearCompleted = function(){
+            $scope.todos = $scope.todos.filter(function(item){
+                return !item.done
+                
+            })
+        }
+                
+        
+        }])
+            
+        </script>
+        
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id lacus pretium, viverra turpis eget, dapibus leo. Fusce tincidunt hendrerit rutrum. Curabitur nec aliquet felis, id consequat purus. Maecenas quis sodales sapien. In id pellentesque ipsum, fringilla pulvinar elit. Praesent feugiat, mi in consectetur sodales, mi risus aliquam tellus, et faucibus magna diam nec ante. Aenean auctor diam vitae libero pulvinar placerat. Sed placerat, odio non sagittis mollis, justo ligula congue purus, eget fringilla justo lorem ut diam. In hac habitasse platea dictumst. Nullam sollicitudin nunc vitae purus consectetur, eu placerat felis feugiat. Ut tincidunt quam id ipsum sodales, ut posuere tortor luctus.
+
+Quisque quis orci sit amet nulla ultrices egestas ac a velit. Aenean condimentum leo eget consectetur condimentum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse blandit lobortis ante non egestas. Ut pretium vitae ligula a dapibus. Sed eleifend eget arcu in lacinia. Pellentesque mi ex, aliquam eget sem at, auctor venenatis lorem.
+
+Morbi eu convallis diam, non porttitor eros. Duis lobortis ut enim eget blandit. Donec sit amet scelerisque nisi. Praesent finibus ipsum a eros pellentesque dictum. Pellentesque id porta sem. Aliquam elementum urna at est volutpat volutpat. Nunc dapibus, odio ac laoreet dapibus, diam mi posuere tellus, id suscipit ligula odio sit amet mauris.
+
+Quisque malesuada dolor ut mauris viverra dignissim non quis ante. Nullam efficitur, justo sit amet scelerisque porttitor, lacus ante faucibus enim, a lobortis mi diam facilisis augue. Nulla nec ligula a enim tempus consectetur vel vitae diam. Praesent eu massa varius, imperdiet velit sit amet, pretium erat. Sed consectetur felis nec nisi luctus dapibus. Aliquam a purus in dui placerat pellentesque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse tempus in tellus non efficitur. Cras risus metus, posuere nec ex ac, sagittis ultricies ex. Duis pharetra orci eget odio pharetra porta.
+
+Aenean suscipit non ipsum nec rhoncus. Aliquam ut commodo odio, in vehicula augue. Integer ut gravida enim. Fusce egestas eros eu eleifend ullamcorper. Ut a pellentesque ligula. Duis ac ante elementum, pharetra ex nec, egestas neque. Cras tincidunt suscipit ultricies. Donec sit amet eleifend purus. Donec consectetur mi a fringilla pretium. Cras dapibus tellus eu augue ultricies sodales. In in dui nunc. Suspendisse laoreet elementum dui, a tempor nisl consectetur lobortis.</p>
+        
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id lacus pretium, viverra turpis eget, dapibus leo. Fusce tincidunt hendrerit rutrum. Curabitur nec aliquet felis, id consequat purus. Maecenas quis sodales sapien. In id pellentesque ipsum, fringilla pulvinar elit. Praesent feugiat, mi in consectetur sodales, mi risus aliquam tellus, et faucibus magna diam nec ante. Aenean auctor diam vitae libero pulvinar placerat. Sed placerat, odio non sagittis mollis, justo ligula congue purus, eget fringilla justo lorem ut diam. In hac habitasse platea dictumst. Nullam sollicitudin nunc vitae purus consectetur, eu placerat felis feugiat. Ut tincidunt quam id ipsum sodales, ut posuere tortor luctus.
+
+Quisque quis orci sit amet nulla ultrices egestas ac a velit. Aenean condimentum leo eget consectetur condimentum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse blandit lobortis ante non egestas. Ut pretium vitae ligula a dapibus. Sed eleifend eget arcu in lacinia. Pellentesque mi ex, aliquam eget sem at, auctor venenatis lorem.
+
+Morbi eu convallis diam, non porttitor eros. Duis lobortis ut enim eget blandit. Donec sit amet scelerisque nisi. Praesent finibus ipsum a eros pellentesque dictum. Pellentesque id porta sem. Aliquam elementum urna at est volutpat volutpat. Nunc dapibus, odio ac laoreet dapibus, diam mi posuere tellus, id suscipit ligula odio sit amet mauris.
+
+Quisque malesuada dolor ut mauris viverra dignissim non quis ante. Nullam efficitur, justo sit amet scelerisque porttitor, lacus ante faucibus enim, a lobortis mi diam facilisis augue. Nulla nec ligula a enim tempus consectetur vel vitae diam. Praesent eu massa varius, imperdiet velit sit amet, pretium erat. Sed consectetur felis nec nisi luctus dapibus. Aliquam a purus in dui placerat pellentesque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse tempus in tellus non efficitur. Cras risus metus, posuere nec ex ac, sagittis ultricies ex. Duis pharetra orci eget odio pharetra porta.
+
+Aenean suscipit non ipsum nec rhoncus. Aliquam ut commodo odio, in vehicula augue. Integer ut gravida enim. Fusce egestas eros eu eleifend ullamcorper. Ut a pellentesque ligula. Duis ac ante elementum, pharetra ex nec, egestas neque. Cras tincidunt suscipit ultricies. Donec sit amet eleifend purus. Donec consectetur mi a fringilla pretium. Cras dapibus tellus eu augue ultricies sodales. In in dui nunc. Suspendisse laoreet elementum dui, a tempor nisl consectetur lobortis.</p>
+        
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id lacus pretium, viverra turpis eget, dapibus leo. Fusce tincidunt hendrerit rutrum. Curabitur nec aliquet felis, id consequat purus. Maecenas quis sodales sapien. In id pellentesque ipsum, fringilla pulvinar elit. Praesent feugiat, mi in consectetur sodales, mi risus aliquam tellus, et faucibus magna diam nec ante. Aenean auctor diam vitae libero pulvinar placerat. Sed placerat, odio non sagittis mollis, justo ligula congue purus, eget fringilla justo lorem ut diam. In hac habitasse platea dictumst. Nullam sollicitudin nunc vitae purus consectetur, eu placerat felis feugiat. Ut tincidunt quam id ipsum sodales, ut posuere tortor luctus.
+
+Quisque quis orci sit amet nulla ultrices egestas ac a velit. Aenean condimentum leo eget consectetur condimentum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse blandit lobortis ante non egestas. Ut pretium vitae ligula a dapibus. Sed eleifend eget arcu in lacinia. Pellentesque mi ex, aliquam eget sem at, auctor venenatis lorem.
+
+Morbi eu convallis diam, non porttitor eros. Duis lobortis ut enim eget blandit. Donec sit amet scelerisque nisi. Praesent finibus ipsum a eros pellentesque dictum. Pellentesque id porta sem. Aliquam elementum urna at est volutpat volutpat. Nunc dapibus, odio ac laoreet dapibus, diam mi posuere tellus, id suscipit ligula odio sit amet mauris.
+
+Quisque malesuada dolor ut mauris viverra dignissim non quis ante. Nullam efficitur, justo sit amet scelerisque porttitor, lacus ante faucibus enim, a lobortis mi diam facilisis augue. Nulla nec ligula a enim tempus consectetur vel vitae diam. Praesent eu massa varius, imperdiet velit sit amet, pretium erat. Sed consectetur felis nec nisi luctus dapibus. Aliquam a purus in dui placerat pellentesque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse tempus in tellus non efficitur. Cras risus metus, posuere nec ex ac, sagittis ultricies ex. Duis pharetra orci eget odio pharetra porta.
+
+Aenean suscipit non ipsum nec rhoncus. Aliquam ut commodo odio, in vehicula augue. Integer ut gravida enim. Fusce egestas eros eu eleifend ullamcorper. Ut a pellentesque ligula. Duis ac ante elementum, pharetra ex nec, egestas neque. Cras tincidunt suscipit ultricies. Donec sit amet eleifend purus. Donec consectetur mi a fringilla pretium. Cras dapibus tellus eu augue ultricies sodales. In in dui nunc. Suspendisse laoreet elementum dui, a tempor nisl consectetur lobortis.</p>
+        <br><br>
+        
+   
+    </body>
+
+
+
+
+
+
+
+
+
+</html>
